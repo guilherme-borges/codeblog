@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Controller
@@ -32,4 +33,17 @@ public class CodeblogController {
         mv.addObject("post", post);
         return mv;
     }
+
+    @RequestMapping(value = "/newpost", method = RequestMethod.GET)
+    public String getPostForm() {
+        return "postForm";
+    }
+
+    @RequestMapping(value = "/newpost", method = RequestMethod.POST)
+    public String savePostForm(Post post) {
+        post.setData(LocalDate.now());
+        codeblogService.save(post);
+        return "redirect:/posts";
+    }
+
 }
